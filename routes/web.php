@@ -105,11 +105,11 @@ Route::get("/gallery/cat", function () {
 });
 
 
-
+Route::middleware(['auth', 'role:admin,teacher,student'])->group(function () {
 Route::get("/teacher", function () {
     return view("teacher");
 });
-
+});
 Route::get("/student", function () {
     return view("student");
 });
@@ -179,3 +179,11 @@ Route::delete('/staff/{id}', [ StaffController::class , 'destroy' ]);
 
 // Route::resource('post', 'PostController');
 Route::resource('post', PostController::class);
+
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware(['auth'])->name('dashboard');
+
+require __DIR__ . '/auth.php';
+
+
